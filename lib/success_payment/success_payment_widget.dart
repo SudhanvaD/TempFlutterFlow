@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -416,21 +417,45 @@ class _SuccessPaymentWidgetState extends State<SuccessPaymentWidget> {
                       child: Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
-                        child: RatingBar.builder(
-                          onRatingUpdate: (newValue) =>
-                              setState(() => _model.ratingBarValue = newValue),
-                          itemBuilder: (context, index) => Icon(
-                            Icons.favorite,
-                            color: Color(0xFF7C2AE8),
+                        child: FutureBuilder<ApiCallResponse>(
+                          future: UpdateTransactionRatingCall.call(
+                            id: widget.refId,
+                            rating: _model.ratingBarValue?.round(),
                           ),
-                          direction: Axis.horizontal,
-                          initialRating: _model.ratingBarValue ??= 3.0,
-                          unratedColor: Color(0xFFA6A1A1),
-                          itemCount: 5,
-                          itemPadding:
-                              EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                          itemSize: 30.0,
-                          glowColor: Color(0xFF7C2AE8),
+                          builder: (context, snapshot) {
+                            // Customize what your widget looks like when it's loading.
+                            if (!snapshot.hasData) {
+                              return Center(
+                                child: SizedBox(
+                                  width: 50.0,
+                                  height: 50.0,
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      FlutterFlowTheme.of(context).primary,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
+                            final ratingBarUpdateTransactionRatingResponse =
+                                snapshot.data!;
+                            return RatingBar.builder(
+                              onRatingUpdate: (newValue) => setState(
+                                  () => _model.ratingBarValue = newValue),
+                              itemBuilder: (context, index) => Icon(
+                                Icons.favorite,
+                                color: Color(0xFF7C2AE8),
+                              ),
+                              direction: Axis.horizontal,
+                              initialRating: _model.ratingBarValue ??= 3.0,
+                              unratedColor: Color(0xFFA6A1A1),
+                              itemCount: 5,
+                              itemPadding:
+                                  EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                              itemSize: 30.0,
+                              glowColor: Color(0xFF7C2AE8),
+                            );
+                          },
                         ),
                       ),
                     ),
@@ -453,10 +478,40 @@ class _SuccessPaymentWidgetState extends State<SuccessPaymentWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
                 child: FFButtonWidget(
-                  onPressed: () {
-                    print('Button pressed ...');
+                  onPressed: () async {
+                    _model.ratingapicall =
+                        await UpdateTransactionRatingCall.call(
+                      id: widget.refId,
+                      rating: _model.ratingBarValue?.round(),
+                    );
+                    if ((_model.ratingapicall?.succeeded ?? true)) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Thank You',
+                            style: FlutterFlowTheme.of(context)
+                                .headlineLarge
+                                .override(
+                                  fontFamily: 'Poppins',
+                                  color: Color(0xFF7C2AE8),
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                          duration: Duration(milliseconds: 950),
+                          backgroundColor:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                        ),
+                      );
+                    }
+
+                    setState(() {});
                   },
                   text: 'Compartir comprobante',
+                  icon: Icon(
+                    Icons.share_outlined,
+                    size: 15.0,
+                  ),
                   options: FFButtonOptions(
                     width: 305.0,
                     height: 60.0,

@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -13,6 +14,8 @@ class SuccessPaymentModel extends FlutterFlowModel {
   final unfocusNode = FocusNode();
   // State field(s) for RatingBar widget.
   double? ratingBarValue;
+  // Stores action output result for [Backend Call - API (UpdateTransactionRating)] action in Button widget.
+  ApiCallResponse? ratingapicall;
 
   /// Initialization and disposal methods.
 

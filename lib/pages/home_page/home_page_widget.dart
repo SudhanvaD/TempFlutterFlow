@@ -63,7 +63,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             children: [
               FFButtonWidget(
                 onPressed: () async {
-                  context.pushNamed('listcardsCopy2Copy');
+                  context.pushNamed('listcardsCopy2');
                 },
                 text: 'ListCards',
                 options: FFButtonOptions(

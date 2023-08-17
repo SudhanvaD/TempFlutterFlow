@@ -487,6 +487,75 @@ class GetTransactionSwaggerIDCall {
       );
 }
 
+class UpdateTransactionRatingCall {
+  static Future<ApiCallResponse> call({
+    String? id = '',
+    int? rating,
+  }) {
+    return ApiManager.instance.makeApiCall(
+      callName: 'UpdateTransactionRating',
+      apiUrl:
+          'https://naubank-api.herokuapp.com/api/v1/transactions/update_transactions_rating/${id}?rating=${rating}',
+      callType: ApiCallType.GET,
+      headers: {
+        'accept': '*/*',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+}
+
+class GetTransactionDetailsByCardNumberCall {
+  static Future<ApiCallResponse> call({
+    String? cardnumber = '',
+  }) {
+    return ApiManager.instance.makeApiCall(
+      callName: 'GetTransactionDetailsByCardNumber',
+      apiUrl:
+          'https://naubank-api.herokuapp.com/api/v1/transactions/get_all_transactions_by_card_number/${cardnumber}',
+      callType: ApiCallType.GET,
+      headers: {},
+      params: {
+        'cardnumber': cardnumber,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+
+  static dynamic transactionId(dynamic response) => getJsonField(
+        response,
+        r'''$.payload[:].transactionId''',
+        true,
+      );
+  static dynamic transactionamount(dynamic response) => getJsonField(
+        response,
+        r'''$.payload[:].transaction_amount''',
+        true,
+      );
+  static dynamic transactionreference(dynamic response) => getJsonField(
+        response,
+        r'''$.payload[:].card_transaction_reference''',
+        true,
+      );
+  static dynamic dateCreated(dynamic response) => getJsonField(
+        response,
+        r'''$.payload[:].dateCreated''',
+        true,
+      );
+  static dynamic productdescription(dynamic response) => getJsonField(
+        response,
+        r'''$.payload[:].transaction_product_description''',
+        true,
+      );
+}
+
 class ApiPagingParams {
   int nextPageNumber = 0;
   int numItems = 0;

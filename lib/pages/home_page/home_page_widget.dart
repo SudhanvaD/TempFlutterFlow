@@ -63,7 +63,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             children: [
               FFButtonWidget(
                 onPressed: () async {
-                  context.pushNamed('listcardsCopy2');
+                  context.pushNamed('listcardsCopy2Copy');
                 },
                 text: 'ListCards',
                 options: FFButtonOptions(
@@ -110,7 +110,15 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               ),
               FFButtonWidget(
                 onPressed: () async {
-                  context.pushNamed('transactions');
+                  context.pushNamed(
+                    'transactions',
+                    queryParameters: {
+                      'cardNumber': serializeParam(
+                        '00',
+                        ParamType.String,
+                      ),
+                    }.withoutNulls,
+                  );
                 },
                 text: 'Button',
                 options: FFButtonOptions(

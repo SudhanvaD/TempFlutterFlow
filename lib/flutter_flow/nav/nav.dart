@@ -90,13 +90,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => ServicesWidget(),
         ),
         FFRoute(
-          name: 'SuccessPage',
-          path: '/successPage',
-          builder: (context, params) => SuccessPageWidget(
-            oderamount: params.getParam('oderamount', ParamType.String),
-          ),
-        ),
-        FFRoute(
           name: 'SuccessPayment',
           path: '/successPayment',
           builder: (context, params) => SuccessPaymentWidget(
@@ -145,12 +138,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'transactions',
           path: '/transactions',
-          builder: (context, params) => TransactionsWidget(),
+          builder: (context, params) => TransactionsWidget(
+            cardNumber: params.getParam('cardNumber', ParamType.String),
+          ),
         ),
         FFRoute(
           name: 'AddCardCopy',
           path: '/addCardCopy',
           builder: (context, params) => AddCardCopyWidget(),
+        ),
+        FFRoute(
+          name: 'listcardsCopy2Copy',
+          path: '/listcardsCopy2Copy',
+          builder: (context, params) => ListcardsCopy2CopyWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
